@@ -1,0 +1,21 @@
+Q. this is the code for the climbing stairs question, so we have to find the number of ways to climb stairs, we can climb one or two steps at a time.
+
+// this question feels confusing but as i track down it feels more like related to fibonnaci. ofcourse for the base case where the no. of steps equal to 0 or 1,
+there is only one way of climbing so base case is: if(n == 0 || 1) return 1; for the main core part f(n) = f(n-1)+f(n-2), converting this into an optimised solution then i would set 
+for(int i=2; i<n;i++){}, this would be my loop part. and then putting my prev1, prev2 as things from base case, it would be prev1 = first index = 1 and prev2 = zeroth index = 1; 
+according to me this code can have a T.C of O(n) because T.C measure how many iterations happens according to the input size and here the iterations are from for loop, hence T.C is O(n) and S.C of O(1) because S.C measure how much extra memmory an algo uses as the input size grows, here as the input size gros it uses
+the same amount of space as the input
+so the code would be :
+
+int stepscount(int n){
+if(n == 0 || 1) return 1;
+int prev2 = 1;
+int prev2 = 1;
+int curr;
+for(int i = 2; i<n; i++){
+curr = prev1 + prev2;
+prev2 = prev1;
+prev1 = curr;
+}
+return curr;
+}
