@@ -1,0 +1,39 @@
+Q) Longest palindrome substring
+//okay this question is a little confusing, i am able to solve it but in leetcode only 93 test casses are passing out of 143 something, anyways i will tell you how i codded here
+so this uses the same logic as longest common substring, but we need to check again if the selected substring are palindrome. see the code you will get it
+
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        if(n<=1) return s;
+        string t = s;
+        reverse(t.begin(),t.end());
+        return lcs(s,t);
+    }
+    string lcs(string&s, string&t){
+        int n = s.size();
+        int ans = 0;
+        int starts = 0;
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int i = 1; i<n+1;i++){
+            for(int j =1;j<n+1;j++){
+                if(s[i-1]==t[j-1]){
+                    dp[i][j] = 1+dp[i-1][j-1];
+                    int start = i-dp[i][j];
+                    int len = dp[i][j];
+                    string palin = s.substr(start,len);
+                    string rev = palin;
+                    reverse(rev.begin(),rev.end()); 
+                    if(len>ans && palin == rev){
+                        ans = len;
+                        starts = start;
+                    }
+                }
+                else dp[i][j] = 0;
+            }
+        }
+        return s.substr(starts,ans);
+    }
+};
