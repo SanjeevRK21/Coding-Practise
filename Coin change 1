@@ -1,0 +1,35 @@
+Q) Coin Change : okay here we will be given an array coins[n], where coins of various values will be given, we will be given a target here we have to achieve the target using 
+min no. of coins from the values given in the array.
+
+// okay the approach we use here is , we use take and no take approach, we start from the last index and then check if the coins[last index] < target, if yes we take that value of coin and
+and we do 1 + mini(n,amount-coins[n],coins,dp), if not we see for coins[last index -1] and do 0 + mini(n-1,amount,coins,dp).
+we then take the min(take, notake) and place it in 2d array dp[n][amount]. we even check for the base case, like if the target left when we reach the last index, i.e 0 is not divisible
+by coins[0] then return dp[n][amount] = 1e9, else return dp[n][amount] = amount/coins[0].
+This is done using memo methode.
+
+core code:
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n  = coins.size();
+        vector<vector<int>>dp(n,vector<int>(ammount+1,-1)); // see here a matrix of dp[0...n-1][0...amount] is created not dp[0...n][0...amount] remember this
+        int ans = mini(n-1,amount,coins,dp);
+        if(ans >= 1e9) return -1;
+        else return ans;
+    }
+    int mini(int n, int amount, vector<int>&coins, vector<vector<int>>&dp){
+        int take = 1e9;
+        int notake;
+        if(dp[n][amount]!=-1) return dp[n][amount]; // here you can return dp[n][amount] = dp[n][amount] as well.
+        if(n==0){
+        if(amount%coins[n]==0) return dp[n][amount] = amount/coins[n]; // this is the last index so you can return the quotient of amount left and coins[0]
+        else return dp[n][amount]= 1e9;
+        }
+        if(coins[n]<=amount){ 
+        take = 1 + mini(n,amount-coins[n],coins,dp);
+        }
+        notake = mini(n-1,amount,coins,dp);
+        dp[n][amount] = min(take,notake);
+        return dp[n][amount];
+    }
+};
