@@ -1,0 +1,40 @@
+Q) Longest palindrome substring
+Methode 1:
+okay so here you need to basically check for palindrome for even as well as odd palindrome. for odd palindrome cput r = l = i
+and for even palindrome checking put l = i and r = i+1; you will have to keep replacing maxlen of the palindrome string with 
+the bigger value present in r-l+1 (this will give you the length of the palindrome substring), you then need to store this in a temp string 
+palin using s.substr(l,maxlen); here l will be the starting char of the palindrome. In the end return palin;
+
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+int n = s.size();
+int maxlen = 0;
+string palin = "";
+int l,r;
+for(int i = 0; i<n;i++){
+l =i;
+r = i;
+while(l>=0 && r<n && s[r]==s[l]){
+if(r-l+1 > maxlen){
+maxlen = r-l+1;
+palin = s.substr(l, maxlen);
+}
+l--;
+r++;
+}
+l =  i;
+r = i+1;
+while(l>=0 && r<n && s[r]==s[l]){
+if(r-l+1 > maxlen){
+maxlen = r-l+1;
+palin = s.substr(l, maxlen);
+}
+l--;
+r++;
+}
+}
+return palin;
+}
+};
