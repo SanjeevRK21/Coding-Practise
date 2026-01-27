@@ -1,0 +1,43 @@
+Q okay we will be given an array where we need to find a subarray giving us the the maximum product
+the catch here is even we encounter 0's or negitives
+when we encounter 0 we just need to see the prefix(left) and suffix(right) of the 0 and then return its max
+if we encounter even number of negitives it wont be an issue and we can return the whole string
+when we encounter odd number of negitives then we need to do the same thing what we did with 0's
+so we will start with the loop from 0 to n-1 where prefix starts multiplying from the start i.e prefix = prefix * nums[i]
+and suffix starts multiplying from the last suffix = suffix * nums[n-i-1]
+in the end we would have defined ans = -1e9
+and we would use 
+if(max(prefix,suffix)>ans) then ans = max(ans, max(prefix,suffix))
+
+
+base case
+int ans = -1e9;
+if(prefic ==0) prefix = 1;
+if(suffix ==0) suffix = 1;
+
+core code 
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+        int pref = 1;
+        int suff = 1;
+        int ans = -1e9;
+        int maxcount = 0;
+        int count = 0;
+        for(int i = 0; i<n; i++){
+            if(pref==0) pref = 1; // for o cases
+            if(suff==0) suff = 1; // for 0 cases
+            pref = pref * nums[i];
+            suff =  suff * nums[n-i-1];
+            if(max(pref,suff)>ans){
+                ans = max(pref,suff);
+            }
+        }
+        return ans; 
+    }
+};
+
+
+
