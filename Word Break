@@ -1,0 +1,35 @@
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of dictionary words.  
+You are allowed to reuse words in the dictionary an unlimited number of times. You may assume all dictionary words are unique.  
+Example 1:  
+Input: s = "neetcode", wordDict = ["neet","code"]  
+Output: true  
+Example 2:  
+Input: s = "catsincars", wordDict = ["cats","cat","sin","in","car"]  
+Output: false  
+
+okay here the trick is we will have to check from each char of the string from the back (from n to 0) if its matching the given words in the wordDict we can check using s.substring(index, length)
+one more thing is we intialise a memo dp(n+1,false) and set dp[n] = true
+the loop here is for(int i = n-1;i=0;i++){for(auto& w: wordDict)}{ the main condition given next line }
+thing is there is a main condition i.e 
+int len = w.size()
+if(i+len < n && s.substr(i+len)==w && dp[i+len]==true) then dp[i]=dp[i+len]
+
+code:
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int n = s.size();
+        vector<bool> dp(n+1,false); 
+        dp[n] = true;
+        for(int i= n-1; i>=0; i--){
+            for(auto &w: wordDict){ // this mean w becomes each word present in wordDict for each iteration
+                int len = w.size();
+                if( (i+len<=n) && (s.substr(i,len)==w) && dp[i+len]==true){ // we are check i+len<=n to make sure i+len isnt going out of bonds, substr(i,len)==w to see that the substring matches the word and dp[i+len]==true this explanation is given above
+                    dp[i] = dp[i+len];
+                }
+            }
+        }
+        return dp[0];
+    }
+};
+
